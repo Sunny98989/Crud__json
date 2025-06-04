@@ -1,0 +1,300 @@
+<mvc:View
+    xmlns:filterbar="sap.ui.comp.filterbar"
+    xmlns:layout="sap.ui.layout"
+    controllerName="main.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+>
+    <App>
+        <pages>
+            <Page
+                title="{i18n>appTitle}"
+                enableScrolling="true"
+            >
+                <content>
+                    <!-- Header Section with Title and Add Button -->
+                    <Panel
+                        class="sapUiResponsiveMargin"
+                        width="auto"
+                    >
+                        <FlexBox
+                            alignItems="Start"
+                            justifyContent="SpaceBetween"
+                        >
+                            <Text
+                                class="headText"
+                                text="{i18n>listOfProducts}"
+                            />
+                            <Button
+                                text="{i18n>addProducts}"
+                                type="Accept"
+                                icon="sap-icon://create"
+                                iconFirst="false"
+                                width="auto"
+                                class="sapUiSmallMarginEnd"
+                                press=".addProductDialog"
+                            />
+                        </FlexBox>
+                    </Panel>
+
+                    <!-- Controls Section -->
+                    <Panel
+                        class="sapUiResponsiveMargin"
+                        width="auto"
+                        expandable="false"
+                        expanded="true"
+
+                    >
+                        <headerToolbar>
+                            <Toolbar>
+                                <Title
+                                    text="Search &amp; Filter"
+                                    level="H4"
+                                />
+                                <ToolbarSpacer />
+                            </Toolbar>
+                        </headerToolbar>
+
+                        <content>
+                            <layout:Grid
+                                defaultSpan="L4 M6 S12"
+                                class="sapUiSmallMargin"
+                            >
+                                <!-- Search Section -->
+                                <VBox class="sapUiMediumMarginBottom">
+                                    <Label
+                                        text="Search Products"
+                                        class="sapUiTinyMarginBottom"
+                                    />
+                                    <SearchField
+                                        id="productSearch"
+                                        placeholder="{i18n>searchProduct}"
+                                        liveChange=".onProductSearch"
+                                        width="100%"
+                                    />
+                                </VBox>
+
+                                <!-- Filter Section -->
+                                <VBox class="sapUiMediumMarginBottom">
+                                    <Label
+                                        text="Filter Options"
+                                        class="sapUiTinyMarginBottom"
+                                    />
+                                    <Select
+                                        id="productFilter"
+                                        change=".onProductFilterChange"
+                                        width="100%"
+                                    >
+                                        <items>
+                                            <core:Item
+                                                key=""
+                                                text="{i18n>filterBy}"
+                                            />
+                                            <core:Item
+                                                key="highestPrice"
+                                                text="{i18n>highestPrice}"
+                                            />
+                                            <core:Item
+                                                key="leastPrice"
+                                                text="{i18n>leastPrice}"
+                                            />
+                                            <core:Item
+                                                key="mostSold"
+                                                text="{i18n>mostSold}"
+                                            />
+                                            <core:Item
+                                                key="leastSold"
+                                                text="{i18n>leastSold}"
+                                            />
+                                            <core:Item
+                                                key="outOfStock"
+                                                text="{i18n>outOfStock}"
+                                            />
+                                            <core:Item
+                                                key="recentMfg"
+                                                text="{i18n>recentMfg}"
+                                            />
+                                        </items>
+                                    </Select>
+                                </VBox>
+
+                                <!-- Sort Section -->
+                                <VBox class="sapUiMediumMarginBottom">
+                                    <Label
+                                        text="Sort Options"
+                                        class="sapUiTinyMarginBottom"
+                                    />
+                                    <Select
+                                        id="sortSelect"
+                                        change=".onSortChange"
+                                        width="100%"
+                                    >
+                                        <items>
+                                            <core:Item
+                                                key=""
+                                                text="{i18n>sortBy}"
+                                            />
+                                            <core:Item
+                                                key="asc"
+                                                text="{i18n>ascending}"
+                                            />
+                                            <core:Item
+                                                key="desc"
+                                                text="{i18n>descending}"
+                                            />
+                                        </items>
+                                    </Select>
+                                </VBox>
+                            </layout:Grid>
+                        </content>
+                    </Panel>
+
+                    <!-- Products Table Section -->
+                    <Panel
+                        class="sapUiResponsiveMargin"
+                        width="auto"
+                        expandable="false"
+                    >
+                        <Toolbar>
+                            <Title
+                                text="Products"
+                                level="H4"
+                            />
+                            <ToolbarSpacer />
+                            <Text
+                                text="Total Products: {productsModel>/products/length}"
+                            />
+                        </Toolbar>
+
+                        <content>
+                            <Table
+                                id="productTable"
+                                items="{productsModel>/products}"
+                                growing="true"
+                                growingScrollToLoad="true"
+                                growingThreshold="10"
+                            >
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Title text="" />
+                                        <ToolbarSpacer />
+                                    </Toolbar>
+                                </headerToolbar>
+
+                                <columns>
+                                    <Column
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline"
+                                        hAlign="Begin"
+                                    >
+                                        <Text text="{i18n>productName}" />
+                                    </Column>
+                                    <Column
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline"
+                                        hAlign="End"
+                                    >
+                                        <Text text="{i18n>productPrice}" />
+                                    </Column>
+                                    <Column
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline"
+                                        hAlign="Center"
+                                    >
+                                        <Text text="{i18n>category}" />
+                                    </Column>
+                                    <Column
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline"
+                                        hAlign="Center"
+                                    >
+                                        <Text text="{i18n>availableStock}" />
+                                    </Column>
+                                    <Column
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline"
+                                        hAlign="Center"
+                                    >
+                                        <Text text="{i18n>quantitySold}" />
+                                    </Column>
+                                    <Column
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline"
+                                        hAlign="Center"
+                                    >
+                                        <Text text="{i18n>mfgDate}" />
+                                    </Column>
+                                    <Column
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline"
+                                        hAlign="Center"
+                                        width="auto"
+                                    >
+                                        <Text text="{i18n>actions}" />
+                                    </Column>
+                                </columns>
+
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text
+                                                text="{productsModel>productname}"
+                                            />
+                                            <ObjectNumber
+                                                number="{productsModel>productprice}"
+                                                unit="USD"
+                                                emphasized="true"
+                                            />
+                                            <Text
+                                                text="{productsModel>category}"
+                                            />
+                                            <ObjectStatus
+                                                text="{productsModel>stock} Pcs."
+                                                state="{= ${productsModel>stock} > 50 ? 'Success' : 'Error' }"
+                                            />
+                                            <ObjectNumber
+                                                number="{productsModel>sold}"
+                                                unit="Pcs."
+                                                state="None"
+                                            />
+                                            <Text
+                                                text="{productsModel>mfgdate}"
+                                            />
+                                            <HBox
+                                                alignItems="Center"
+                                                justifyContent="Center"
+                                            >
+                                                <Button
+                                                    text="{i18n>editProduct}"
+                                                    type="Emphasized"
+                                                    icon="sap-icon://edit"
+                                                    press=".onEdit"
+                                                    class="sapUiTinyMarginEnd"
+                                                />
+                                                <Button
+                                                    text="{i18n>deleteProduct}"
+                                                    type="Reject"
+                                                    icon="sap-icon://delete"
+                                                    press=".onDelete"
+                                                />
+                                            </HBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </Panel>
+                </content>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>

@@ -1,0 +1,82 @@
+[
+  {
+    "Product Name": "Organic Soil Mix",
+    "Product Price": 299,
+    "Category": "Gardening",
+    "Available Stock": 120,
+    "Quantity Sold": 80,
+    "Mfg Date": "2024-12-10"
+  },
+  {
+    "Product Name": "Bluetooth Speaker",
+    "Product Price": 1599,
+    "Category": "Electronics",
+    "Available Stock": 50,
+    "Quantity Sold": 120,
+    "Mfg Date": "2025-02-15"
+  },
+  {
+    "Product Name": "Yoga Mat",
+    "Product Price": 499,
+    "Category": "Fitness",
+    "Available Stock": 60,
+    "Quantity Sold": 35,
+    "Mfg Date": "2025-03-05"
+  },
+  {
+    "Product Name": "LED Desk Lamp",
+    "Product Price": 899,
+    "Category": "Home Decor",
+    "Available Stock": 75,
+    "Quantity Sold": 50,
+    "Mfg Date": "2024-11-20"
+  },
+  {
+    "Product Name": "Wireless Mouse",
+    "Product Price": 699,
+    "Category": "Computers",
+    "Available Stock": 200,
+    "Quantity Sold": 180,
+    "Mfg Date": "2025-01-18"
+  },
+  {
+    "Product Name": "Wooden Chair",
+    "Product Price": 2499,
+    "Category": "Furniture",
+    "Available Stock": 30,
+    "Quantity Sold": 15,
+    "Mfg Date": "2024-09-25"
+  },
+  {
+    "Product Name": "Ceramic Vase",
+    "Product Price": 649,
+    "Category": "Home Decor",
+    "Available Stock": 85,
+    "Quantity Sold": 40,
+    "Mfg Date": "2025-04-02"
+  },
+  {
+    "Product Name": "Stainless Steel Bottle",
+    "Product Price": 349,
+    "Category": "Kitchen",
+    "Available Stock": 150,
+    "Quantity Sold": 90,
+    "Mfg Date": "2024-12-30"
+  },
+  {
+    "Product Name": "Running Shoes",
+    "Product Price": 1899,
+    "Category": "Footwear",
+    "Available Stock": 65,
+    "Quantity Sold": 55,
+    "Mfg Date": "2025-02-10"
+  },
+  {
+    "Product Name": "Cotton Bedsheet",
+    "Product Price": 999,
+    "Category": "Home Textiles",
+    "Available Stock": 110,
+    "Quantity Sold": 75,
+    "Mfg Date": "2025-03-22"
+  }
+]
