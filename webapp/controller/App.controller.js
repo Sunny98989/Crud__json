@@ -265,7 +265,15 @@ sap.ui.define(
         var formData = this._getFormValues();
 
         // Validate if all fields are filled
-        if (Object.values(formData).every((val) => val)) {
+        var isAllFieldsFilled = true;
+        for (var key in formData) {
+          if (!formData[key]) {
+            isAllFieldsFilled = false;
+            break;
+          }
+        }
+
+        if (isAllFieldsFilled) {
           formData.id = this.aProductData.length + 1;
           this.aProductData.push(formData);
 
@@ -285,9 +293,13 @@ sap.ui.define(
         var oProduct = oContext.getObject();
         this._editingProductId = oProduct.id;
 
-        var editProductData = this.aProductData.find(
-          (val) => val.id == oProduct.id
-        );
+        var editProductData = null;
+        for (var i = 0; i < this.aProductData.length; i++) {
+          if (this.aProductData[i].id == oProduct.id) {
+            editProductData = this.aProductData[i];
+            break;
+          }
+        }
 
         if (!this._oEditDialog) {
           this._oEditDialog = this._createProductDialog(true);
@@ -302,10 +314,19 @@ sap.ui.define(
         var oBundle = this.getView().getModel("i18n").getResourceBundle();
         var formData = this._getFormValues("edit");
 
-        var productToEdit = this.aProductData.find(
-          (val) => val.id == this._editingProductId
-        );
-        Object.assign(productToEdit, formData);
+        var productToEdit = null;
+        for (var i = 0; i < this.aProductData.length; i++) {
+          if (this.aProductData[i].id == this._editingProductId) {
+            productToEdit = this.aProductData[i];
+            break;
+          }
+        }
+
+        if (productToEdit) {
+          for (var key in formData) {
+            productToEdit[key] = formData[key];
+          }
+        }
 
         this._updateProductModel();
         this._clearFormFields("edit");
@@ -316,26 +337,30 @@ sap.ui.define(
         }
       },
 
-      // Deletes product after confirmation
+      // Deletes product after confirmation using alert
       onDelete: function (oEvent) {
         var oBundle = this.getView().getModel("i18n").getResourceBundle();
         var oContext = oEvent.getSource().getBindingContext("productsModel");
         var id = oContext.getObject().id;
 
-        var index = this.aProductData.findIndex((val) => val.id == id);
+        var index = -1;
+        for (var i = 0; i < this.aProductData.length; i++) {
+          if (this.aProductData[i].id == id) {
+            index = i;
+            break;
+          }
+        }
 
-        MessageBox.warning(oBundle.getText("deleteConfirm"), {
-          actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-          emphasizedAction: MessageBox.Action.OK,
-          onClose: function (sAction) {
-            if (sAction == MessageBox.Action.OK && index !== -1) {
-              this.aProductData.splice(index, 1);
-              this._updateProductModel();
-              MessageToast.show(oBundle.getText("productDeleted"));
-            }
-          }.bind(this),
-          dependentOn: this.getView(),
-        });
+        var confirmMessage =
+          oBundle.getText("deleteConfirm") ||
+          "Are you sure you want to delete this product?";
+        var confirmed = window.confirm(confirmMessage);
+
+        if (confirmed && index !== -1) {
+          this.aProductData.splice(index, 1);
+          this._updateProductModel();
+          MessageToast.show(oBundle.getText("productDeleted"));
+        }
       },
 
       // Sorts the product list by name ascending/descending
